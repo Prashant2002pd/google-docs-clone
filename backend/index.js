@@ -1,7 +1,11 @@
-const { Socket } = require("socket.io");
+const { Socket, Server } = require("socket.io");
+const express = require("express");
+const { createServer } = require("node:http");
 const mongoose = require("mongoose");
 const Document = require("./models/index");
 const dotenv = require("dotenv");
+const cors = require("cors");
+
 dotenv.config();
 
 mongoose
@@ -13,10 +17,13 @@ mongoose
     console.log(error);
   });
 
-const io = require("socket.io")(process.env.PORT || 3000, {
+const app = express();
+app.use(cors());
+const server = createServer(app);
+const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST"],
+    origin: ["*"],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
   },
 });
 
@@ -47,3 +54,9 @@ async function get_data(id) {
   if (document) return document;
   return await Document.create({ id, data: "" });
 }
+
+server.listen(process.env.PORT || 3000, () => {
+  console.log("====================================");
+  console.log("server is running");
+  console.log("====================================");
+});
