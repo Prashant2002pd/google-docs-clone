@@ -15,7 +15,7 @@ mongoose
 
 const io = require("socket.io")(process.env.PORT || 3000, {
   cors: {
-    origin: "*",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
   },
 });
