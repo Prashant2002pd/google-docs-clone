@@ -22,7 +22,7 @@ function Texteditor() {
   const [quill, setQuill] = useState();
 
   useEffect(() => {
-    const s = io("https://google-docs-clone-tax2.onrender.com/");
+    const s = io("http://localhost:3000");
     setSocket(s);
     return () => {
       s.disconnect();

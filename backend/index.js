@@ -13,7 +13,7 @@ mongoose
     console.log(error);
   });
 
-const io = require("socket.io")(3000, {
+const io = require("socket.io")(process.env.PORT || 3000, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
