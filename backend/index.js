@@ -4,9 +4,14 @@ const Document = require("./models/index");
 const dotenv = require("dotenv");
 dotenv.config();
 
-mongoose.connect(process.env.DB).then(() => {
-  console.log("database connected");
-});
+mongoose
+  .connect(process.env.DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("database connected");
+  });
 
 const io = require("socket.io")(3000, {
   cors: {
