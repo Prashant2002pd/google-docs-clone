@@ -21,17 +21,23 @@ const io = require("socket.io")(process.env.PORT || 3000, {
 });
 
 io.on("connection", (socket) => {
+  console.log("a user connected");
   socket.on("get-document", async (documentID) => {
     const document = await get_data(documentID);
     socket.join(documentID);
     socket.emit("load-document", document.data);
     socket.on("send-changes", (delta) => {
+      console.log("changes saved");
+
       socket.broadcast.to(documentID).emit("receive-changes", delta);
     });
 
     socket.on("save-document", async (data) => {
       await Document.findOneAndUpdate({ id: documentID }, { data });
     });
+  });
+  socket.on("disconect", () => {
+    console.log("user disconect");
   });
 });
 
