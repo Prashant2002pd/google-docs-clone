@@ -4,15 +4,13 @@ const Document = require("./models/index");
 const dotenv = require("dotenv");
 dotenv.config();
 
-mongoose
-  .connect(process.env.DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
+try {
+  mongoose.connect(process.env.DB).then(() => {
     console.log("database connected");
   });
-
+} catch (error) {
+  console.log(error);
+}
 const io = require("socket.io")(3000, {
   cors: {
     origin: "*",
