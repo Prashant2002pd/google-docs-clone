@@ -22,7 +22,7 @@ function Texteditor() {
   const [quill, setQuill] = useState();
 
   useEffect(() => {
-    const s = io("https://google-docs-clone-backend.vercel.app/");
+    const s = io("https://google-gocs-backend.onrender.com/");
     setSocket(s);
     return () => {
       s.disconnect();
